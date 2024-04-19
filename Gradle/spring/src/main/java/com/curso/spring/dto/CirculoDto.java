@@ -12,5 +12,5 @@ import javax.validation.constraints.NotNull;
 
 public class CirculoDto {
     @NotNull(message = "El valor del radio no puede ser nulo")
-    private double radio;
+    private Double radio;
 }

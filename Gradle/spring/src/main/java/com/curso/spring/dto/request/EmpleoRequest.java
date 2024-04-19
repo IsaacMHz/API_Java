@@ -1,29 +1,23 @@
 package com.curso.spring.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
-
-public class PersonaRequest {
+public class EmpleoRequest {
     @NotNull(message = "El valor del campo no puede ser nulo")
-    private Long idPersona;
+    private Long empleo_id;
 
     @NotBlank(message = "El valor del campo no puede ser nulo o contener s\u00f3lo espacios en blanco")
-    private String nombre;
-
-    @NotNull(message = "El valor del campo no puede ser nulo")
-    private Integer edad;
+    private String titulo;
 
     @NotBlank(message = "El valor del campo no puede ser nulo o contener s\u00f3lo espacios en blanco")
-    private String genero;
+    private String empresa;
 
     @NotNull(message = "El valor del campo no puede ser nulo")
-    private Integer idDireccion;
-
-    @NotNull(message = "El valor del campo no puede ser nulo")
-    private Integer idEmpleo;
+    private Double salario;
 }

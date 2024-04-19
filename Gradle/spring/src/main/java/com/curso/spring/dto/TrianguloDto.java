@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 public class TrianguloDto {
     @NotNull(message = "El valor de la base no ser nulo")
-    private double base;
+    private Double base;
     @NotNull(message = "El valor de la altura no debe ser nulo")
-    private double altura;
+    private Double altura;
 }

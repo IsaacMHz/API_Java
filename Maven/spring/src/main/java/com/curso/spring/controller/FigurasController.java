@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("figuras")
+@RequestMapping("/figuras/maven")
 @Slf4j
 @CrossOrigin
 @Tag(name = "Figuras")

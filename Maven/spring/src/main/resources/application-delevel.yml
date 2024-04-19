@@ -1,0 +1,6 @@
+#Conexion a Db
+DB_HOST: localhost
+DB_PORT: 1433
+DB_SCHEMA: personasDB
+DB_USERNAME: sa
+DB_PASSWORD: 123456

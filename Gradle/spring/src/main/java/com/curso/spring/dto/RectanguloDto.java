@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 
 public class RectanguloDto {
     @NotNull(message = "El valor de la base no puede ser nulo")
-    public double base;
+    public Double base;
     @NotNull(message = "El valor de la altura no puede ser nulo")
-    private double altura;
+    private Double altura;
 
 }
