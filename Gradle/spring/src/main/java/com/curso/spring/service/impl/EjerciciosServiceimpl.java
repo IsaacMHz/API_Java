@@ -1,8 +1,12 @@
 package com.curso.spring.service.impl;
 
+import com.curso.spring.response.Post;
 import com.curso.spring.service.IEjerciciosService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +58,25 @@ public class EjerciciosServiceimpl implements IEjerciciosService {
                 .filter(nombre -> nombre.toLowerCase().contains("i"))
                 .collect(Collectors.toList());
         return listaresponse;
+    }
+
+    @Override
+    public Post getPost(Integer id) {
+
+        ResponseEntity<Post> resultPost = null;
+
+        try {
+            String url = "https://jsonplaceholder.typicode.com/todos/" + id ;
+            RestTemplate restTemplate = new RestTemplate();
+
+             resultPost = restTemplate.exchange(url, HttpMethod.GET,null,Post.class);
+
+             Post response = restTemplate.getForObject(url, Post.class);
+             resultPost = ResponseEntity.ok(response);
+
+        }catch (Exception e){
+            log.info("Error");
+        }
+        return resultPost.getBody() ;
     }
 }

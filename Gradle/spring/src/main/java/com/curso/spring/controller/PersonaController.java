@@ -1,6 +1,9 @@
 package com.curso.spring.controller;
 
 import com.curso.spring.dto.Persona;
+import com.curso.spring.dto.request.DireccionEmpleoPersonaRequest;
+import com.curso.spring.dto.request.DireccionRequest;
+import com.curso.spring.dto.request.EmpleoRequest;
 import com.curso.spring.dto.request.PersonaRequest;
 import com.curso.spring.model.Personas;
 import com.curso.spring.response.DatosPersonaResponse;
@@ -59,16 +62,40 @@ public class PersonaController {
         iPersonasService.eliminarPersona(id);
     }
 
-    @GetMapping("/personas/genero/{genero}")
+    @GetMapping("/genero/{genero}")
     @Operation(summary = "Operaci\u00f3n para obtener datos por genero")
     public List<String> getNombrePersonaByGenero(@PathVariable String genero){
         return iPersonasService.personasByGenero(genero);
     }
 
-    @GetMapping("/personas/info/{id}")
+    @GetMapping("/info/{id}")
     @Operation(summary = "Operaci\u00f3n para obtener info de persona")
     public ResponseEntity<Object> getInfoPersona(@PathVariable Integer id){
         return iPersonasService.getInfoPersona(id);
+    }
+
+    @PostMapping("/save/nativo")
+    @Operation(summary = "Operaci\u00f3n para guardar en base de datos de manera nativa")
+    public ResponseEntity<?> savePersonaNative(@RequestBody PersonaRequest request){
+        return iPersonasService.savePersonaNativa(request);
+    }
+
+    @PutMapping("/update/native")
+    @Operation(summary = "Operaci\u00f3n para actualizar la DB de manera nativa")
+    public ResponseEntity<?> actualizarPersonaNative(@RequestBody PersonaRequest request) throws Exception{
+        return iPersonasService.actualizarPersonaNative(request);
+    }
+
+    @DeleteMapping("/delete/native/{id}")
+    @Operation(summary = "Operaci\u00f3n para eliminar de manera logica")
+    public boolean deletePersonaNative(@PathVariable Long id){
+        return iPersonasService.deletePersonaNative(id);
+    }
+
+    @PostMapping("/insertar/persona/empleo/direccion")
+    @Operation(summary = "Operaci\u00f3n para insertar una persona, un empleo y una direccion al mismo tiempo")
+    public ResponseEntity<?> insertarPersonaEmpleoDireccion(@RequestBody DireccionEmpleoPersonaRequest request){
+        return iPersonasService.insertarPersonaEmpleoDireccion(request);
     }
 
 }

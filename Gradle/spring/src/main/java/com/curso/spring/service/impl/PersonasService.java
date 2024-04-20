@@ -1,9 +1,17 @@
 package com.curso.spring.service.impl;
 
+import com.curso.spring.dto.request.DireccionEmpleoPersonaRequest;
+import com.curso.spring.dto.request.DireccionRequest;
+import com.curso.spring.dto.request.EmpleoRequest;
 import com.curso.spring.dto.request.PersonaRequest;
+import com.curso.spring.model.Direcciones;
+import com.curso.spring.model.Empleos;
 import com.curso.spring.model.Personas;
+import com.curso.spring.repository.DireccionesRepository;
+import com.curso.spring.repository.EmpleosRepository;
 import com.curso.spring.repository.PersonasRepository;
 import com.curso.spring.response.DatosPersonaResponse;
+import com.curso.spring.service.IDireccionesService;
 import com.curso.spring.service.IPersonasService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,6 +30,10 @@ public class PersonasService implements IPersonasService {
 
     @Autowired
     private PersonasRepository personasRepository;
+    @Autowired
+    private DireccionesService direccionesService;
+    @Autowired
+    private EmpleosService empleosService;
 
     @Override
     public List<Personas> findAllPersons() {
@@ -39,8 +52,8 @@ public class PersonasService implements IPersonasService {
         personas.setNombre(request.getNombre());
         personas.setEdad(request.getEdad());
         personas.setGenero(request.getGenero());
-       // personas.setDireccionId(request.getIdDireccion());
-        //personas.setEmpleoId(request.getIdEmpleo());
+        personas.setDireccionId(request.getIdDireccion());
+        personas.setEmpleoId(request.getIdEmpleo());
 
         return ResponseEntity.ok(personasRepository.save(personas));
     }
@@ -107,4 +120,88 @@ public class PersonasService implements IPersonasService {
         }
         return response ;
     }
+
+    @Transactional
+    @Override
+    public ResponseEntity<?> savePersonaNativa(PersonaRequest request) {
+
+        ResponseEntity<?> response = null;
+
+        try {
+            log.info("Request guardar: " + request);
+            Integer result = personasRepository.savePersonaNativa(request);
+
+            if (result>0){
+            response = ResponseEntity.ok("Guardado exitosamente");
+            }else {
+                response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocurrio un error al insertar");
+            }
+
+        }catch (Exception e){
+            log.error("Error " + e.getMessage());
+        }
+        return response;
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<?> actualizarPersonaNative(PersonaRequest request) throws Exception {
+
+        ResponseEntity<?> response = null;
+
+        try{
+            log.info("Request guardar: " + request);
+            Integer result = personasRepository.actualizarPersonaNative(request);
+
+            if (result>0){
+                response = ResponseEntity.ok("Guardado exitosamente");
+            }else {
+                response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocurrio un error al insertar");
+            }
+        }catch (Exception e){
+            throw new Exception("Error en metodo actualizarPersonaNative: " + e.getMessage());
+        }
+
+        return response;
+    }
+
+    //Metodo para eliminar una persona
+    @Transactional
+    @Override
+    public boolean deletePersonaNative(Long id) {
+
+        boolean response = false;
+
+        try{
+            personasRepository.deletePersonaNative(id);
+            response =true;
+        }catch (Exception e){
+            log.error("Error " + e.getMessage());
+        }
+
+        return response;
+    }
+
+    public ResponseEntity<?> guardarPersona2(PersonaRequest request,Long direccionId, Long empleoId) {
+
+        Personas nuevaPersona = new Personas();
+        nuevaPersona.setNombre(request.getNombre());
+        nuevaPersona.setEdad(request.getEdad());
+        nuevaPersona.setGenero(request.getGenero());
+        nuevaPersona.setDireccionId(direccionId);
+        nuevaPersona.setEmpleoId(empleoId);
+        personasRepository.save(nuevaPersona);
+
+        return ResponseEntity.ok("Operaci\u00f3n exitosa");
+    }
+
+    @Override
+    public ResponseEntity<?> insertarPersonaEmpleoDireccion(DireccionEmpleoPersonaRequest request) {
+
+        Long direccionId = direccionesService.guardarDireccion(request.getDireccionRequest());
+        Long empleoId = empleosService.guardarEmpleo(request.getEmpleoRequest());
+        return guardarPersona2(request.getPersonaRequest(),direccionId,empleoId);
+
+    }
+
 }

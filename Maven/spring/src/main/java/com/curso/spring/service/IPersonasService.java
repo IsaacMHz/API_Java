@@ -1,5 +1,6 @@
 package com.curso.spring.service;
 
+import com.curso.spring.dto.request.DireccionEmpleoPersonaRequest;
 import com.curso.spring.dto.request.PersonaRequest;
 import com.curso.spring.model.Personas;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,16 @@ public interface IPersonasService {
     Personas buscarPersonaPorId(Long id);
     ResponseEntity<Object> updatePersona(PersonaRequest request);
 
-    void eliminarPersona(@PathVariable Long id);
+    void eliminarPersona(Long id);
 
     List<String> personasByGenero(String genero);
 
     ResponseEntity<Object> getInfoPersona(Integer id);
+
+    ResponseEntity<?> savePersonaNativa(PersonaRequest request);
+
+    ResponseEntity<?> actualizarPersonaNative(PersonaRequest request) throws Exception;
+    boolean deletePersonaNative(Long id);
+
+    ResponseEntity<?> insertarPersonaEmpleoDireccion(DireccionEmpleoPersonaRequest request);
 }

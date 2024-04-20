@@ -1,6 +1,7 @@
 package com.curso.spring.controller;
 
 import com.curso.spring.dto.Persona;
+import com.curso.spring.response.Post;
 import com.curso.spring.service.IEjerciciosService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -43,4 +44,12 @@ public class HolaMundoController {
     public List<String> getNombres(){
         return iEjerciciosService.getNombres();
     }
+
+    @GetMapping("/posts/{id}")
+    @Operation(summary = "Operacion para consumir un servicio")
+    public Post getPosts(@PathVariable Integer id){
+        return iEjerciciosService.getPost(id);
+    }
+
+
 }

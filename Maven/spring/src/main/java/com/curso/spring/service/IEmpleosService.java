@@ -11,9 +11,31 @@ public interface IEmpleosService {
 
     ResponseEntity<Empleos> insertarEmpleo(Empleos request);
 
+    ResponseEntity<?> insertarEmpleo2(EmpleoRequest empleoRequest);
+
     ResponseEntity<Object> actualizarEmpleo(EmpleoRequest request);
 
     ResponseEntity<Object> eliminarEmpleo(Long id);
 
     ResponseEntity<Object> mostrarEmpleoId(Long id);
+
+    //--------------------------------------------------------------------
+
+    //JPQL
+    ResponseEntity<Object> obtenerEmpleoJPQL(Long id);
+
+    ResponseEntity<?> actualizarEmpleoJPQL(EmpleoRequest request);
+
+    boolean eliminarEmpleoJPQL(Long id);
+
+    //--------------------------------------------------------------------
+
+    //NativeQuery
+    ResponseEntity<Object> obtenerEmpleoQueryNative(Integer id);
+
+    ResponseEntity<?> insertarEmpleoQueryNative(EmpleoRequest request);
+
+    ResponseEntity<?> actualizarEmpleoQueryNative(EmpleoRequest request);
+
+    boolean eliminarEmpleoQueryNative(Long id);
 }

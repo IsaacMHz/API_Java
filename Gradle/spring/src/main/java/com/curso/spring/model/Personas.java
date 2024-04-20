@@ -1,8 +1,6 @@
 package com.curso.spring.model;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,10 +24,12 @@ public class Personas {
     @NotBlank(message = "El valor del campo no puede ser nulo o contener s\u00f3lo espacios en blanco")
     @Column(name = "genero")
     private String genero;
-    @ManyToOne
-    @JoinColumn(name = "direccion_id")
-    private Direcciones direccionId;
-    @ManyToOne
-    @JoinColumn(name = "empleo_id")
-    private Empleos empleoId;
+    //@ManyToOne
+    //@JoinColumn(name = "direccion_id")
+    @Column(name = "direccion_id")
+    private Long direccionId;
+    //@ManyToOne
+    //@JoinColumn(name = "empleo_id")
+    @Column(name = "empleo_id")
+    private Long empleoId;
 }

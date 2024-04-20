@@ -11,9 +11,31 @@ public interface IDireccionesService {
 
     ResponseEntity<Direcciones> insertarDireccion(Direcciones request);
 
+    ResponseEntity<?> insertarDireccion2(DireccionRequest direccionRequest);
+
     ResponseEntity<Object> actualizarDireccion(DireccionRequest request);
 
     ResponseEntity<Object> eliminarDireccion(Long id);
 
     ResponseEntity<Object> buscarDireccionId(Long id);
+
+    //--------------------------------------------------------------------
+
+    //JPQL
+    ResponseEntity<Object> obtenerDireccionJPQL(Long id);
+
+    ResponseEntity<?> actualizarDireccionJPQL(DireccionRequest request);
+
+    boolean eliminarDireccionJPQL(Long id);
+
+    //--------------------------------------------------------------------
+
+    //NativeQuery
+    ResponseEntity<Object> obtenerDireccionQueryNative(Integer id);
+
+    ResponseEntity<?> insertarDireccionQueryNative(DireccionRequest request);
+
+    ResponseEntity<?> actualizarDireccionQueryNative(DireccionRequest request);
+
+    boolean eliminarDireccionQueryNative(Long id);
 }
